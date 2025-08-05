@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "PythonBridge.h"
 
+#include <QMenu>
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -60,8 +61,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // Fetch-Button
     fetchButton = new QPushButton("Mein Portfolio aktualisieren", central);
     fetchButton->setFixedSize(260, 40);
-    fetchButton->setStyleSheet("font-size: 16px; background-color: #1976D2; color: white; border-radius: 8px;");
+    fetchButton->setStyleSheet("font-size: 16px; background-color: #1976D2; color: white; border-radius: 12px;");
     mainLayout->addWidget(fetchButton, 0, Qt::AlignCenter);
+
+    QAction* quitAction = nullptr;
+    // User Menu
+    auto *userMenu = new QMenu("Benutzer", this);
+    userMenu->addAction("Einstellungen");
+    userMenu->addAction("Über");
+    quitAction = userMenu->addAction("Beenden");
+    auto *userButton = new QPushButton("Nutzer");
+    userButton->setMenu(userMenu);
+    userButton->setStyleSheet("font-size: 16px; background-color: #E0E0E0; color: black; border-radius: 12px; QPushButton::menu-indicator { image: none; }");
+    userButton->setFixedSize(120, 40);
+    auto *userLayout = new QHBoxLayout();
+    userLayout->addStretch();
+    userLayout->addWidget(userButton);
+    mainLayout->insertLayout(0, userLayout);
 
     // Tabel
     table = new QTableView(central);
@@ -84,11 +100,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     bridge = new PythonBridge(this);
     connect(bridge, &PythonBridge::received, this, &MainWindow::onData);
-    connect(bridge, &PythonBridge::failed,   this, &MainWindow::onFailed);
+    connect(bridge, &PythonBridge::failed, this, &MainWindow::onFailed);
 
     // Interaction
     connect(fetchButton, &QPushButton::clicked, this, &MainWindow::fetchNow);
     connect(searchBar, &QLineEdit::returnPressed, this, &MainWindow::fetchNow);
+
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 
     // Default
     searchBar->setText("AAPL, MSFT, NVDA, GOOGL");
@@ -157,6 +175,3 @@ void MainWindow::onFailed(const QString& msg) {
     statusBar()->showMessage(msg, 5000);
     qWarning().noquote() << "[bridge failed]" << msg;
 }
-
-
-
