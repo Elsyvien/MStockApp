@@ -1,0 +1,161 @@
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+cmake-build-*/
+build/
+out/
+
+# Qt-related
+*.pro.user
+*.pro.user.*
+ui_*.h
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+*.qm
+*.prl
+*.app
+*.autosave
+.qmake.cache
+.qmake.stash
+*.qmlc
+*.jsc
+Makefile*
+*build-*
+
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dll
+*.dylib
+
+# Qt Temporaries
+*.tmp
+/tmp/
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# IDE specific files
+# CLion
+.idea/
+cmake-build-*/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.opendb
+
+# QtCreator
+*.pro.user
+*.pro.user.*
+*.qws
+*.creator
+*.creator.user
+*.files
+*.includes
+*.config
+*.cflags
+*.cxxflags
+*.creator.user.*
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Python (für Ihre python_scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pytest_cache/
+
+# Documentation
+Doxygen/
+doc/html/
+doc/latex/
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.#*
+
+# Log files
+*.log
+
+# Package files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
