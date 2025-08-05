@@ -1,7 +1,12 @@
 #pragma once
 #include <QMainWindow>
 #include <QStandardItemModel>
-#include "PythonBridge.h"
+
+class QStandardItemModel;
+class QTableView;
+class QLineEdit;
+class QPushButton;
+class PythonBridge;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -11,7 +16,7 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 
 private slots:
     void onData(const QJsonObject& payload);
@@ -19,7 +24,9 @@ private slots:
     void fetchNow();
 
 private:
-    Ui::MainWindow *ui;
-    QStandardItemModel* model;
-    PythonBridge* bridge;
+    QLineEdit* searchBar = nullptr;
+    QPushButton* fetchButton = nullptr;
+    QTableView* table = nullptr;
+    QStandardItemModel* model = nullptr;
+    PythonBridge* bridge = nullptr;
 };
