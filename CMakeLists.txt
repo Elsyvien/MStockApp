@@ -1,45 +1,80 @@
 cmake_minimum_required(VERSION 3.16)
-project(PortfolioApp VERSION 1.0.0)
+project(MStockApp VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find required Qt components
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets Charts Network)
+# Check if Qt is available, but make it optional for now
+option(USE_QT "Use Qt GUI (requires Qt5 or Qt6 installation)" OFF)
 
-# Enable Qt's meta-object system
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
+if(USE_QT)
+    # Try to find Qt6 first, then fallback to Qt5
+    find_package(Qt6 QUIET COMPONENTS Core Widgets Charts Network)
+    if(NOT Qt6_FOUND)
+        find_package(Qt5 REQUIRED COMPONENTS Core Widgets Charts Network)
+        set(QT_VERSION_MAJOR 5)
+    else()
+        set(QT_VERSION_MAJOR 6)
+    endif()
 
-# Source files (add your .cpp files here)
-set(SOURCES
-    # src/main.cpp
-    # Add your source files here
-)
+    # Enable Qt's meta-object system
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_AUTOUIC ON)
+    set(CMAKE_AUTORCC ON)
 
-# Header files (add your .h files here)
-set(HEADERS
-    # src/mainwindow.h
-    # Add your header files here
-)
+    # Source files
+    set(SOURCES
+        src/main.cpp
+        src/ui/mstock.cpp
+    )
 
-# UI files (add your .ui files here)
-set(UI_FILES
-    # ui/mainwindow.ui
-    # Add your UI files here
-)
+    # Header files
+    set(HEADERS
+        src/ui/mstock.h
+    )
 
-# Create executable (uncomment when you add source files)
-# add_executable(PortfolioApp ${SOURCES} ${HEADERS} ${UI_FILES})
+    # UI files
+    set(UI_FILES
+        src/ui/mstock.ui
+    )
 
-# Link Qt libraries (uncomment when you add executable)
-# target_link_libraries(PortfolioApp
-#     Qt6::Core
-#     Qt6::Widgets
-#     Qt6::Charts
-#     Qt6::Network
-# )
+    # Create executable
+    add_executable(MStockApp ${SOURCES} ${HEADERS} ${UI_FILES})
 
-# Include directories (uncomment when you add executable)
-# target_include_directories(PortfolioApp PRIVATE src)
+    # Link Qt libraries (version-dependent)
+    if(QT_VERSION_MAJOR EQUAL 6)
+        target_link_libraries(MStockApp
+            Qt6::Core
+            Qt6::Widgets
+            Qt6::Charts
+            Qt6::Network
+        )
+    else()
+        target_link_libraries(MStockApp
+            Qt5::Core
+            Qt5::Widgets
+            Qt5::Charts
+            Qt5::Network
+        )
+    endif()
+
+    # Include directories
+    target_include_directories(MStockApp PRIVATE src)
+    message(STATUS "Building with Qt${QT_VERSION_MAJOR}")
+
+else()
+    # Console application without Qt (for testing the build system)
+    set(CONSOLE_SOURCES
+        src/console_main.cpp
+    )
+
+    add_executable(MStockApp ${CONSOLE_SOURCES})
+    target_include_directories(MStockApp PRIVATE src)
+
+    message(STATUS "Building console version (Qt not available)")
+    message(STATUS "To build with Qt GUI, install Qt and run: cmake -DUSE_QT=ON ..")
+    message(STATUS "Install Qt with:")
+    message(STATUS "  Ubuntu/Debian: sudo apt install qtbase5-dev qtcharts5-dev")
+    message(STATUS "  Fedora: sudo dnf install qt5-qtbase-devel qt5-qtcharts-devel")
+    message(STATUS "  Arch: sudo pacman -S qt5-base qt5-charts")
+endif()
