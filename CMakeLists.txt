@@ -13,9 +13,10 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(MStockApp main.cpp MainWindow.cpp)
+add_executable(MStockApp src/main.cpp ui/MainWindow.cpp)
 target_link_libraries(MStockApp
         Qt::Core
         Qt::Gui
         Qt::Widgets
 )
+target_include_directories(MStockApp PRIVATE ui src python)

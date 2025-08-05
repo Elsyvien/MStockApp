@@ -1,5 +1,7 @@
 #pragma once
 #include <QMainWindow>
+#include <QStandardItemModel>
+#include "PythonBridge.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
