@@ -17,9 +17,10 @@
 #include <QStringList>
 #include <QDebug>
 #include <QStatusBar>
+#include <qjsonvalue.h>
+#include <QJsonObject>
 
 #include <limits>
-#include <qjsonvalue.h>
 
 #ifndef PYTHON_EXE
 #define PYTHON_EXE "/usr/bin/python"
@@ -133,6 +134,7 @@ void MainWindow::onData(const QJsonObject& payload) {
             // Convert Last to double
             double last = std::numeric_limits<double>::quiet_NaN();
             const QJsonValue lastVal = v.value("last");
+
             if (lastVal.isDouble()) {
                 last = lastVal.toDouble();
             } else if (lastVal.isString()) {
