@@ -159,3 +159,4 @@ doc/latex/
 *.db
 *.sqlite
 *.sqlite3
+CMakeLists.txt.user
