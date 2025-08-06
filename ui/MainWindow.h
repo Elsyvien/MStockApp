@@ -1,16 +1,13 @@
 #pragma once
 #include <QMainWindow>
-#include <QStandardItemModel>
+#include <QJsonObject>
 
-class QStandardItemModel;
-class QTableView;
 class QLineEdit;
 class QPushButton;
+class QTableView;
+class QStandardItemModel;
 class PythonBridge;
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+class GraphWidget;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -19,14 +16,15 @@ public:
     ~MainWindow() override;
 
 private slots:
+    void fetchNow();
     void onData(const QJsonObject& payload);
     void onFailed(const QString& msg);
-    void fetchNow();
 
 private:
-    QLineEdit* searchBar = nullptr;
-    QPushButton* fetchButton = nullptr;
-    QTableView* table = nullptr;
-    QStandardItemModel* model = nullptr;
-    PythonBridge* bridge = nullptr;
+    QLineEdit*           searchBar   = nullptr;
+    QPushButton*         fetchButton = nullptr;
+    QTableView*          table       = nullptr;
+    QStandardItemModel*  model       = nullptr;
+    PythonBridge*        bridge      = nullptr;
+    GraphWidget*         graph       = nullptr;  // <— wichtig
 };
