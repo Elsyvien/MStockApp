@@ -27,7 +27,7 @@ public:
     void requestPrices(const QStringList& tickers, const QString& pythonExe, const QString& scriptPath) {
         proc->start(pythonExe, {scriptPath}); // Start the Python script with the executable
         if (!proc->waitForStarted(3000)) {
-            emit failed("Python process failed to start!");
+            emit failed("Python process failed to start! \n Make sure you have the correct dependecies installed!");
             std::cout << "proc->waitForStarted() failed to start\n";
             return;
         }
@@ -35,6 +35,23 @@ public:
         req["tickers"] = QJsonArray::fromStringList(tickers);
         auto bytes = QJsonDocument(req).toJson(QJsonDocument::Compact) + "\n";
         std::cout << bytes.toStdString() << "Making Request\n";
+        proc->write(bytes);
+        proc->closeWriteChannel();
+    }
+
+    void requestHistory(const QString& ticker, const QString& pythonExe, const QString& scriptPath, const QString& period = "1mo", const QString& interval = "1d") {
+        proc->start(pythonExe, {scriptPath});
+        if (!proc->waitForStarted(3000)) {
+            emit failed("Python process failed to Start! \n Make sure you have the correct dependecies installed!");
+            return;
+        }
+        QJsonObject req;
+        req["mode"] = "history";
+        req["ticker"] = ticker;
+        req["period"] = period;
+        req["interval"] = interval;
+        auto bytes = QJsonDocument(req).toJson(QJsonDocument::Compact) + "\n";
+        std::cout << bytes.toStdString() << "Making Request for History\n";
         proc->write(bytes);
         proc->closeWriteChannel();
     }
