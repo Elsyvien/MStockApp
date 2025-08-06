@@ -2,7 +2,6 @@
 import sys, json, time
 import yfinance as yf
 import pandas as pd
-import numpy as np
 
 def fetch(tickers):
     out = {}

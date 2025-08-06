@@ -27,7 +27,7 @@ public:
     void requestPrices(const QStringList& tickers, const QString& pythonExe, const QString& scriptPath) {
         proc->start(pythonExe, {scriptPath}); // Start the Python script with the executable
         if (!proc->waitForStarted(3000)) {
-            emit failed("Python process failed to start! \n Make sure you have the correct dependecies installed!");
+            emit failed("Python process failed to start! \nMake sure you have the correct dependecies installed!");
             std::cout << "proc->waitForStarted() failed to start\n";
             return;
         }
@@ -42,7 +42,7 @@ public:
     void requestHistory(const QString& ticker, const QString& pythonExe, const QString& scriptPath, const QString& period = "1mo", const QString& interval = "1d") {
         proc->start(pythonExe, {scriptPath});
         if (!proc->waitForStarted(3000)) {
-            emit failed("Python process failed to Start! \n Make sure you have the correct dependecies installed!");
+            emit failed("Python process failed to Start! \nMake sure you have the correct dependecies installed!");
             return;
         }
         QJsonObject req;
