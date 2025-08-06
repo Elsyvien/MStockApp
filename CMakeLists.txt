@@ -6,16 +6,18 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Charts)
 
 add_executable(MStockApp
         src/main.cpp
         ui/MainWindow.cpp
         src/PythonBridge.h
         ui/MainWindow.h
+        src/GraphWidget.cpp
+        src/GraphWidget.h
 )
 
-target_link_libraries(MStockApp PRIVATE Qt::Core Qt::Gui Qt::Widgets)
+target_link_libraries(MStockApp PRIVATE Qt::Core Qt::Gui Qt::Widgets Qt::Charts)
 target_include_directories(MStockApp PRIVATE ui src python)
 
 # Copy Python script to the build directory after building
